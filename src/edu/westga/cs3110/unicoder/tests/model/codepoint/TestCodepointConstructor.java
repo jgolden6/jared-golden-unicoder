@@ -16,10 +16,16 @@ class TestCodepointConstructor {
 	}
 	
 	@Test
-	void testInvalidConstrcutor() {
+	void testNullConstrcutor() {
 		assertThrows(IllegalArgumentException.class, ()-> {
 			new Codepoint(null);
 		});
 	}
-
+	
+	@Test
+	void testNineDigitInput() {
+		assertThrows(IllegalArgumentException.class, ()-> {
+			new Codepoint("111111111");
+		});
+	}
 }
