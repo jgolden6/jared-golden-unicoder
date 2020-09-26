@@ -26,6 +26,15 @@ public class Codepoint {
 			return "0000".substring(this.codepointHex.length()) + this.codepointHex;
 		}
 		
-		return null;
+		String codepointBinary = Integer.toBinaryString(codepointInt - 0x10000);
+		String codepointBinaryPadded = "00000000000000000000".substring(codepointBinary.length()) + codepointBinary;
+		String upperSurrogateBinary = codepointBinaryPadded.substring(0, 10);
+		String lowerSurrogateBinary = codepointBinaryPadded.substring(10);
+		int upperSurrogate = 0xD800 + Integer.parseUnsignedInt(upperSurrogateBinary, 2);
+		int lowerSurrogate = 0xDC00 + Integer.parseUnsignedInt(lowerSurrogateBinary, 2);
+		String result = Integer.toHexString(upperSurrogate) + Integer.toHexString(lowerSurrogate);
+		
+		return result;
 	}
+
 }
