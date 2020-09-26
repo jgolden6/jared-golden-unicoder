@@ -11,10 +11,21 @@ public class Codepoint {
 	}
 	
 	public String toUTF32() {
-		if (this.codepointHex.length() == 8) {
-			return this.codepointHex;
+		return "00000000".substring(this.codepointHex.length()) + this.codepointHex;
+	}
+	
+	public String toUTF16() {
+		if (this.codepointHex.equals("")) {
+			return "0000";
 		}
 		
-		return "00000000".substring(this.codepointHex.length()) + this.codepointHex;
+		int codepointInt = Integer.parseUnsignedInt(this.codepointHex, 16);
+		
+		if (codepointInt >= 0x0000 && codepointInt <= 0xD7FF ||
+				codepointInt >= 0xE000 && codepointInt <= 0xFFFF) {
+			return "0000".substring(this.codepointHex.length()) + this.codepointHex;
+		}
+		
+		return null;
 	}
 }
