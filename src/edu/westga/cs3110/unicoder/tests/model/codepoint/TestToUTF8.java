@@ -43,5 +43,40 @@ class TestToUTF8 {
 		assertTrue("DFBE".equalsIgnoreCase(codepoint1.toUTF8()));
 		assertTrue("DFBF".equalsIgnoreCase(codepoint2.toUTF8()));
 	}
+	
+	@Test
+	void testThreeByteLowerBounds() {
+		Codepoint codepoint1 = new Codepoint("0800");
+		Codepoint codepoint2 = new Codepoint("0801");
 
+		assertTrue("E0A080".equalsIgnoreCase(codepoint1.toUTF8()));
+		assertTrue("E0A081".equalsIgnoreCase(codepoint2.toUTF8()));
+	}
+	
+	@Test
+	void testThreeByteUpperBounds() {
+		Codepoint codepoint1 = new Codepoint("FFFE");
+		Codepoint codepoint2 = new Codepoint("FFFF");
+
+		assertTrue("EFBFBE".equalsIgnoreCase(codepoint1.toUTF8()));
+		assertTrue("EFBFBF".equalsIgnoreCase(codepoint2.toUTF8()));
+	}
+	
+	@Test
+	void testFourByteLowerBounds() {
+		Codepoint codepoint1 = new Codepoint("10000");
+		Codepoint codepoint2 = new Codepoint("10001");
+
+		assertTrue("F0908080".equalsIgnoreCase(codepoint1.toUTF8()));
+		assertTrue("F0908081".equalsIgnoreCase(codepoint2.toUTF8()));
+	}
+
+	@Test
+	void testFourByteUpperBounds() {
+		Codepoint codepoint1 = new Codepoint("10FFFE");
+		Codepoint codepoint2 = new Codepoint("10FFFF");
+
+		assertTrue("F48FBFBE".equalsIgnoreCase(codepoint1.toUTF8()));
+		assertTrue("F48FBFBF".equalsIgnoreCase(codepoint2.toUTF8()));
+	}
 }

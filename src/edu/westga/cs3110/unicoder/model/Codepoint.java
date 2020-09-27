@@ -41,16 +41,35 @@ public class Codepoint {
 		String result = "";
 		int codepointInt = Integer.parseUnsignedInt(this.codepointHex, 16);
 		String codepointBinary = Integer.toBinaryString(codepointInt);
-		String codepointBinaryPadded = "00000000000".substring(codepointBinary.length()) + codepointBinary;
 		
-		if (codepointInt >= 0x0000 && codepointInt <= 0x007f) {
+		if (codepointInt >= 0x00 && codepointInt <= 0x7f) {
 			result = "00".substring(this.codepointHex.length()) + this.codepointHex;
 		}
 		
 		if (codepointInt >= 0x0080 && codepointInt <= 0x07FF) {
+			String codepointBinaryPadded = "00000000000".substring(codepointBinary.length()) + codepointBinary;
 			String byteOne = "110" + codepointBinaryPadded.substring(0, 5);
 			String byteTwo = "10" + codepointBinaryPadded.substring(5);
 			String combinedBytes = byteOne + byteTwo;
+			result = Integer.toHexString(Integer.parseUnsignedInt(combinedBytes, 2));
+		}
+		
+		if (codepointInt >= 0x0800 && codepointInt <= 0xFFFF) {
+			String codepointBinaryPadded = "0000000000000000".substring(codepointBinary.length()) + codepointBinary;
+			String byteOne = "1110" + codepointBinaryPadded.substring(0, 4);
+			String byteTwo = "10" + codepointBinaryPadded.substring(4, 10);
+			String byteThree = "10" + codepointBinaryPadded.substring(10);
+			String combinedBytes = byteOne + byteTwo + byteThree;
+			result = Integer.toHexString(Integer.parseUnsignedInt(combinedBytes, 2));
+		}
+		
+		if (codepointInt >= 0x10000 && codepointInt <= 0x10FFFF) {
+			String codepointBinaryPadded = "000000000000000000000".substring(codepointBinary.length()) + codepointBinary;
+			String byteOne = "11110" + codepointBinaryPadded.substring(0, 3);
+			String byteTwo = "10" + codepointBinaryPadded.substring(3, 9);
+			String byteThree = "10" + codepointBinaryPadded.substring(9, 15);
+			String byteFour = "10" + codepointBinaryPadded.substring(15);
+			String combinedBytes = byteOne + byteTwo + byteThree + byteFour;
 			result = Integer.toHexString(Integer.parseUnsignedInt(combinedBytes, 2));
 		}
 		
