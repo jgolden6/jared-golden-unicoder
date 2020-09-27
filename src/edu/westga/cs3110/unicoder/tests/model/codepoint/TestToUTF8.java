@@ -1,6 +1,6 @@
 package edu.westga.cs3110.unicoder.tests.model.codepoint;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -79,4 +79,12 @@ class TestToUTF8 {
 		assertTrue("F48FBFBE".equalsIgnoreCase(codepoint1.toUTF8()));
 		assertTrue("F48FBFBF".equalsIgnoreCase(codepoint2.toUTF8()));
 	}
+	
+	@Test
+	void testOutOfBoundsCodepoint() {
+		Codepoint codepoint = new Codepoint("11FFFF");
+		
+		assertTrue("".equalsIgnoreCase(codepoint.toUTF8()));
+	}
+
 }

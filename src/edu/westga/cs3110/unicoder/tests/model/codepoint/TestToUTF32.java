@@ -1,6 +1,6 @@
 package edu.westga.cs3110.unicoder.tests.model.codepoint;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
@@ -8,13 +8,6 @@ import edu.westga.cs3110.unicoder.model.Codepoint;
 
 class TestToUTF32 {
 
-	@Test
-	void testNoInput() {
-		Codepoint codepoint = new Codepoint("");
-		
-		assertEquals("00000000", codepoint.toUTF32());
-	}
-	
 	@Test
 	void testOneDigitInput() {
 		Codepoint codepoint = new Codepoint("1");
