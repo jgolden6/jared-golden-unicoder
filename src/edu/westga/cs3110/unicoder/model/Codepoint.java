@@ -36,5 +36,24 @@ public class Codepoint {
 		
 		return result;
 	}
-
+	
+	public String toUTF8() {
+		String result = "";
+		int codepointInt = Integer.parseUnsignedInt(this.codepointHex, 16);
+		String codepointBinary = Integer.toBinaryString(codepointInt);
+		String codepointBinaryPadded = "00000000000".substring(codepointBinary.length()) + codepointBinary;
+		
+		if (codepointInt >= 0x0000 && codepointInt <= 0x007f) {
+			result = "00".substring(this.codepointHex.length()) + this.codepointHex;
+		}
+		
+		if (codepointInt >= 0x0080 && codepointInt <= 0x07FF) {
+			String byteOne = "110" + codepointBinaryPadded.substring(0, 5);
+			String byteTwo = "10" + codepointBinaryPadded.substring(5);
+			String combinedBytes = byteOne + byteTwo;
+			result = Integer.toHexString(Integer.parseUnsignedInt(combinedBytes, 2));
+		}
+		
+		return result;
+	}
 }
